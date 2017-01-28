@@ -1,0 +1,7 @@
+html_document:
+  self_contained: false
+  theme:  sandstone # cosmo, journal, flatly
+  highlight: textmate
+  includes:
+    before_body: _navigation.html
+    after_body: _footer.html

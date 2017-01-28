@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="W. Caleb McDaniel" />
+
+
+<title>Using Pandoc on iOS (Sorta)</title>
+
+<script src="pandoc-on-ios_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="pandoc-on-ios_files/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="pandoc-on-ios_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="pandoc-on-ios_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="pandoc-on-ios_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="pandoc-on-ios_files/highlight/textmate.css"
+      type="text/css" />
+<script src="pandoc-on-ios_files/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="pandoc-on-ios_files/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<!--Begin contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+<div class="header">
+        <ul class= "nav nav-pills pull-right">
+            <li class="hidden-phone"><a href="./cv.html">CV</a></li>
+            <li class="hidden-phone"><a href="./research.html">Research/</a></li>
+            <li class="hidden-phone"><a href="./teaching.html">Teaching/</a></li>
+            <li class="hidden-phone"><a href="./hacks.html">Hacks/</a></li>
+			<li class="visible-phone"><a href="./index.html#site-map">&larr; Site Map</a></li>
+			<li><a href="index.html"><img src="./photo.jpg" class="pull-left"></a></li>
+        </ul>
+</div>
+
+<!--End contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Using Pandoc on iOS (Sorta)</h1>
+<h4 class="author"><em>W. Caleb McDaniel</em></h4>
+<h4 class="date"><em>May 3, 2013</em></h4>
+
+</div>
+
+
+<p>As I’ve explained before, I now do almost all of my writing—<a href="http://wcm1.web.rice.edu/my-academic-book-in-plain-text.html">including my academic writing</a>—in plain-text, Markdown files. I then use the incomparable document-conversion tool, <a href="http://johnmacfarlane.net/pandoc/">Pandoc</a>, to turn these files into HTML, Microsoft Word documents, PDFs, or EPUBs. Even <a href="./colophon.html#how-this-site-is-built">this website</a> is produced with Pandoc.</p>
+<p>One virtue of this preference for plain-text files is that it enables me to write on my iOS devices. Plain text is mobile. But Pandoc is not, or so I have long assumed. Because Pandoc is a command-line utility, my ability to convert Markdown into Pandoc’s other file formats has so far been tethered to my laptop.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Enter <a href="http://www.docverter.com">Docverter</a>, an open-source tool that makes it possible to use Pandoc without having it installed on your machine. To use it, you post <code>multipart/form-data</code> requests to a URL and get Pandoc output as a response, using the <a href="http://www.docverter.com/api.html">Docverter API</a> to select which Pandoc options you want to use. So, for example, you can send Markdown text to Docverter and get back formatted PDF output, which you can then write to a PDF file—all without having a computer with Pandoc installed.</p>
+<p>But can you use Docverter without having a desktop or laptop computer at all? At first glance, no: the documentation suggests using another command-line Unix utility, <code>curl</code>, to make requests to Docverter. But you can’t use <code>curl</code> from an iPhone or an iPad, or at least not easily. If you want to use Pandoc from an iOS device, you need a different way to access Docverter.</p>
+<div id="pythonista-docverter-ipandoc-sorta" class="section level2">
+<h2>Pythonista + Docverter = iPandoc (Sorta)</h2>
+<p>The solution is <a href="http://omz-software.com/pythonista/">Pythonista</a>, an inexpensive iOS app that allows you to write and execute Python scripts, including ones that interact with web services like—you guessed it—Docverter. Last weekend I spent a day writing a script that uses <code>httplib</code>, one of the standard Python libraries included with Pythonista, to post requests to Docverter from my iPad and get back Pandoc output.</p>
+<p>You can <a href="https://gist.github.com/5478382">grab the script</a>, with explanatory comments, as a Gist.</p>
+<p>Briefly put, the script works like this. I open a text editing app like Nebulous Notes and put some Markdown text on my iOS clipboard. I open Pythonista and run my iMDtoPDF script. A few moments later, a PDF output file appears in my <a href="www.dropbox.com">Dropbox</a>.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>This method will help me quite a bit in the following sort of situation: I am away from my laptop, but I need to email a long, footnote-heavy document to someone. Or a student requests a recommendation letter that is due before I can get to my computer, and I need to create a PDF version with letterhead from the plain text version of the letter that I keep under version control. Now I can run this script, go to my iOS Dropbox app, and email the PDF file from there, all without leaving the iPad.</p>
+<p>In other words, I can use Pandoc on the iPad … sorta. I haven’t yet figured out how to utilize all of Docverter’s options in my script. And unlike Pandoc, Docverter does not use LaTeX to produce PDFs. Instead, it converts Markdown to HTML and then uses a service called <a href="http://code.google.com/p/flying-saucer/">Flying Saucer</a> to print that HTML to a PDF. Nonetheless, this method still allows you to control some of the styling of the PDF by using a CSS stylesheet and embedded fonts. For example, <a href="https://www.dropbox.com/s/xreurp728bgn6f5/pandoc-on-ios.pdf">here’s the PDF output</a> of this post using the CSS declarations included in my script.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+</div>
+<div id="extending-the-script" class="section level2">
+<h2>Extending the Script</h2>
+<p>In <a href="https://gist.github.com/5478382">the Gist version</a> of this script, I’ve deliberately kept things simple. But the version I’m using has several extended features.</p>
+<p>For example, the public version automatically gives the output PDF file a generic, time-stamped name. But you can use Pythonista’s console module to prompt yourself for a specific title.</p>
+<pre class="python"><code>## Name output file with user input
+import console
+title = console.input_alert(&#39;Output filename&#39;, &#39;Enter title below&#39;)
+outfile = title + &#39;.pdf&#39;</code></pre>
+<p>By adding these two lines to the end, I can also have the script automatically open the output file in <a href="http://www.goodiware.com/goodreader.html">GoodReader</a>, where I can then preview, annotate or email it:</p>
+<pre class="python"><code>## Get temporary URL for file in Dropbox
+share_url = dropbox_client.media(outfile)
+url = share_url.get(&#39;url&#39;, &#39;not found&#39;)
+
+## Prefix the URL with &#39;g&#39; to open in Goodreader
+import webbrowser
+webbrowser.open(&#39;g&#39; + url)</code></pre>
+<p>Python makes numerous other features possible: my modified version, for example, prints a timestamp in the footer of the PDF’s first page. And Docverter itself can be used to extend the script: with a slight tweak of the script’s <code>fields</code> variable, for instance, you can output Docx files or EPUB files instead. Finally, by stringing together Pythonista with other apps like Drafts, it’s possible to automate this script without having to manually launch Pythonista every time a conversion takes place.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<p>These solutions, to be sure, do not bring Pandoc in all its glory to the iOS platform. But they do <em>sorta</em> make Pandoc mobile. And I think that’s sorta cool.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I should note that many iOS text editors now feature the ability to create Markdown previews or convert Markdown into HTML. But they lack some of the features of Pandoc that I most rely on, like footnotes and PDF output.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>The ability to upload the file to Dropbox requires taking two other steps in addition to this script. First, you have to create a free Dropbox development app. Then, you have to create <a href="https://gist.github.com/4034526">this separate script</a> in Pythonista; it includes a function for interacting with the Dropbox API that is called by my script. For more information, see <a href="http://omz-software.com/pythonista/forums/discussion/10/using-the-dropbox-module/p1">Using the Dropbox module</a> in the Pythonista forums.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Flying Saucer’s method of producing PDFs does have disadvantages over Pandoc’s native use of LaTeX; for example, you’ll notice in the PDF version of this post that quotation marks within code blocks are converted into HTML character codes, which wouldn’t happen if I had made the PDF using Pandoc on my laptop. For most of the mobile use cases that I can imagine, however, Flying Saucer should fine.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>For tips on automation and a ton of other Pythonista ideas, see Frederico Vitti’s <a href="http://www.macstories.net/stories/automating-ios-how-pythonista-changed-my-workflow/">monster post</a> on Macstories.<a href="#fnref4">↩</a></p></li>
+</ol>
+</div>
+
+<!--Begin contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+<!--Footer-->
+
+<footer>
+
+		<ul class="nav nav-pills pull-right hidden-phone">
+            <li class="transparent"><script type="text/javascript">
+			<!--
+			h='&#114;&#x69;&#x63;&#x65;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#x63;&#x61;&#108;&#x65;&#98;#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;';e=n+a+h;
+			document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'<img src='+'"./img/glyph_em'+'ail.png"'+'>'+'<\/'+'a'+'>');
+			// -->
+			</script><noscript>&#x63;&#x61;&#108;&#x65;&#98;&#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#x65;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;</noscript>
+			</li>
+			<li class="transparent"><a href="http://www.twitter.com/wcaleb" title="My Twitter feed" class="transparent"><img src="./img/glyph_twitter.png"></a></li>
+			<li class="transparent"><a href="http://pinboard.in/u:wcaleb" title="My Pinboard"><img src="./img/glyph_pinboard.png"></a></li>
+			<li class="transparent"><a href="http://clippings.tumblr.com" title="My Tumblr blog, Clippings"><img src="./img/glyph_tumblr.png"></a></li>
+			<li class="transparent"><a href="http://github.com/wcaleb" title="My Github repos"><img src="./img/glyph_github.png"></a></li>
+		</ul>
+
+<ul class="nobullet">
+<li><a href="colophon.html">Colophon/</a></li>
+<li><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License/</a></li>
+<li><a href="./feed.xml">RSS/</a></li>
+<li class="visible-phone"><a href="./index.html#contact">Contact/</a></li>
+</ul>
+
+</footer>
+
+<!--Statcounter-->
+
+<script type="text/javascript">
+var sc_project=2874620; 
+var sc_invisible=0; 
+var sc_partition=29; 
+var sc_security="cc89e61f"; 
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script>
+
+<noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c30.statcounter.com/2874620/0/cc89e61f/0/" alt="invisible hit counter" /></a></div></noscript>
+
+<!--End contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

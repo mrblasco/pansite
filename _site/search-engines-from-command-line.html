@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="W. Caleb McDaniel" />
+
+
+<title>Search Engines from the Command Line on a Mac</title>
+
+<script src="search-engines-from-command-line_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="search-engines-from-command-line_files/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="search-engines-from-command-line_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="search-engines-from-command-line_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="search-engines-from-command-line_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="search-engines-from-command-line_files/highlight/textmate.css"
+      type="text/css" />
+<script src="search-engines-from-command-line_files/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="search-engines-from-command-line_files/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<!--Begin contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+<div class="header">
+        <ul class= "nav nav-pills pull-right">
+            <li class="hidden-phone"><a href="./cv.html">CV</a></li>
+            <li class="hidden-phone"><a href="./research.html">Research/</a></li>
+            <li class="hidden-phone"><a href="./teaching.html">Teaching/</a></li>
+            <li class="hidden-phone"><a href="./hacks.html">Hacks/</a></li>
+			<li class="visible-phone"><a href="./index.html#site-map">&larr; Site Map</a></li>
+			<li><a href="index.html"><img src="./photo.jpg" class="pull-left"></a></li>
+        </ul>
+</div>
+
+<!--End contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Search Engines from the Command Line on a Mac</h1>
+<h4 class="author"><em>W. Caleb McDaniel</em></h4>
+<h4 class="date"><em>September 7, 2012</em></h4>
+
+</div>
+
+
+<p>Lincoln Mullen wrote a post yesterday about <a href="http://chronicle.com/blogs/profhacker/how-to-hack-urls-for-faster-searches-in-your-browser/42304">How to Hack URLs for Faster Searches in Your Browser</a>. His tips showed how to add different search engines to Google Chrome, but it got me thinking about how I could do something similar from the command line. A few bash functions later, I now have an easy way to search Google Scholar, Flickr, IMDb, and even proprietary databases in my university library—all in the browser of my choice. For example, say I want to search Google Scholar. At the command line, I can now just type this:</p>
+<pre><code>$ scholar &quot;benedict anderson imagined communities&quot;</code></pre>
+<p>And I get <a href="http://scholar.google.com/scholar?hl=en&amp;q=benedict+anderson+imagined+communities">this</a>. Or if I want to search the Handbook of Texas Online, I type this:</p>
+<pre><code>$ hotx &quot;monroe edwards&quot;</code></pre>
+<p>And I get <a href="http://www.tshaonline.org/search/node/monroe%20edwards">these results</a>. I can even use Google Translate to get Spanish translations of English words. I type:</p>
+<pre><code>$ spanish &quot;it&#39;s hot outside&quot;</code></pre>
+<p>And I get a <a href="http://translate.google.com/#en/es/it%27s+hot+outside">quick translation</a>.</p>
+<p>My method is basically to create a series of bash functions that use the built-in Mac OS X <a href="http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man1/open.1.html">open command</a>. I’ve put these functions in a <a href="http://github.com/wcaleb/se-aliases">GitHub repository</a>. To use them yourself, just copy the <code>se-aliases.sh</code> file to your computer, and then add this line to your <code>.bashrc</code> file (or create one if you don’t have one):</p>
+<pre><code>$ source path/to/se-aliases.sh</code></pre>
+<p>Once you’re done, you can use any of the functions at the command line. I also find it convenient to do this using <a href="http://decimus.net/DTerm">DTerm</a>. I can invoke DTerm with a global hotkey (mine is Shift-Command-Return), and then type in my command, like so:</p>
+<div class="figure">
+<img src="./dterm-screen.jpg" alt="Searching IMDb with DTerm" />
+<p class="caption">Searching IMDb with DTerm</p>
+</div>
+<p>Hitting enter on the command in that image immediately sent me to <a href="http://www.imdb.com/title/tt1787660/">this page</a> about a good documentary I recently saw about “Being Elmo,” which seems like it’s almost as fun as being geeky. Happy searching!</p>
+<hr />
+<p>P.S. I did a little googling after my initial post and found <a href="http://www.if-not-true-then-false.com/2009/google-search-from-linux-and-unix-command-line/">someone else</a> doing exactly the same thing, with some slight variations in the way input is handled. Check it out!</p>
+
+<!--Begin contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+<!--Footer-->
+
+<footer>
+
+		<ul class="nav nav-pills pull-right hidden-phone">
+            <li class="transparent"><script type="text/javascript">
+			<!--
+			h='&#114;&#x69;&#x63;&#x65;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#x63;&#x61;&#108;&#x65;&#98;#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;';e=n+a+h;
+			document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'<img src='+'"./img/glyph_em'+'ail.png"'+'>'+'<\/'+'a'+'>');
+			// -->
+			</script><noscript>&#x63;&#x61;&#108;&#x65;&#98;&#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#x65;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;</noscript>
+			</li>
+			<li class="transparent"><a href="http://www.twitter.com/wcaleb" title="My Twitter feed" class="transparent"><img src="./img/glyph_twitter.png"></a></li>
+			<li class="transparent"><a href="http://pinboard.in/u:wcaleb" title="My Pinboard"><img src="./img/glyph_pinboard.png"></a></li>
+			<li class="transparent"><a href="http://clippings.tumblr.com" title="My Tumblr blog, Clippings"><img src="./img/glyph_tumblr.png"></a></li>
+			<li class="transparent"><a href="http://github.com/wcaleb" title="My Github repos"><img src="./img/glyph_github.png"></a></li>
+		</ul>
+
+<ul class="nobullet">
+<li><a href="colophon.html">Colophon/</a></li>
+<li><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License/</a></li>
+<li><a href="./feed.xml">RSS/</a></li>
+<li class="visible-phone"><a href="./index.html#contact">Contact/</a></li>
+</ul>
+
+</footer>
+
+<!--Statcounter-->
+
+<script type="text/javascript">
+var sc_project=2874620; 
+var sc_invisible=0; 
+var sc_partition=29; 
+var sc_security="cc89e61f"; 
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script>
+
+<noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c30.statcounter.com/2874620/0/cc89e61f/0/" alt="invisible hit counter" /></a></div></noscript>
+
+<!--End contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

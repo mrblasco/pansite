@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+	<title>W. Caleb McDaniel</title>
+	<description>Posts on research, teaching, and computer hacks by an assistant professor of history at Rice University</description>
+	<link>http://wcm1.web.rice.edu</link>
+	<atom:link href="http://wcm1.web.rice.edu/feed.xml"
+	 rel="self" type="application/rss+xml" />
+	<item>
+		<title>This is just a test</title>
+		<link>http://wcm1.web.rice.edu/testing_post.html</link>
+		<guid>http://wcm1.web.rice.edu/testing_post.html</guid>
+		<pubDate>Thu, 28 Jan 2016 00:00:00 EST</pubDate>
+		<description>[...]</description>
+	</item>
+	<item>
+		<title>Rubric for Historical Thinking Skills</title>
+		<link>http://wcm1.web.rice.edu/historical-thinking-rubric.html</link>
+		<guid>http://wcm1.web.rice.edu/historical-thinking-rubric.html</guid>
+		<pubDate>Fri, 15 May 2015 00:00:00 EDT</pubDate>
+		<description><p>The main objective of this rubric is to provide you with targets for your own learning in this course. As you read the descriptions of each historical skill, think about whether they would be fitting descriptions of your own work and, if not, about what steps you could take to improve the fit.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>[...]</description>
+	</item>
+	<item>
+		<title>Lewis Perry's Civil Disobedience</title>
+		<link>http://wcm1.web.rice.edu/civil-disobedience-review.html</link>
+		<guid>http://wcm1.web.rice.edu/civil-disobedience-review.html</guid>
+		<pubDate>Tue, 28 Apr 2015 00:00:00 EDT</pubDate>
+		<description><p>Over the last sixty years, numerous reformers have laid claim to what the antiwar activist Philip Berrigan called, in 1968, “a rich tradition of civil disobedience” in American history (25). Often, such activists have even claimed that civil disobedience is a civil right inherent to the American democratic tradition itself. “Such claims were not stated so clearly before the 1960s,” notes Lewis Perry in his wide-ranging, fascinating narrative of the evolution of civil disobedience (25). But the notion that civil disobedience was a shared heritage of all Americans “remained strong” in the anti-nuclear and anti-abortion protests of the 1970s and 1980s, and continues to surface today (304).</p>[...]</description>
+	</item>
+	<item>
+		<title>The History Major in a Digital Age</title>
+		<link>http://wcm1.web.rice.edu/history-major-in-digital-age.html</link>
+		<guid>http://wcm1.web.rice.edu/history-major-in-digital-age.html</guid>
+		<pubDate>Sun, 04 Jan 2015 00:00:00 EST</pubDate>
+		<description><p>I delivered a version of these comments as part of a <a href="https://aha.confex.com/aha/2015/webprogram/Session12225.html">roundtable at the AHA 2015 meeting</a> in New York City, which posed the question, “Whither the History Major?” My comments focused on what the history major looks like in a “digital age.” In the delivered talk, I focus more on how “capstone” projects might change to reflect digital changes in the landscape of history.</p>[...]</description>
+	</item>
+	<item>
+		<title>Slave Sales on Twitter</title>
+		<link>http://wcm1.web.rice.edu/slave-sales-on-twitter.html</link>
+		<guid>http://wcm1.web.rice.edu/slave-sales-on-twitter.html</guid>
+		<pubDate>Sat, 15 Nov 2014 00:00:00 EST</pubDate>
+		<description><p>In <a href="http://books.google.com/books?id=TUtFgWOISxMC&amp;lpg=PA124&amp;ots=JkLLPw4h9o&amp;pg=PA124#v=onepage&amp;q&amp;f=false">his 1975 critique</a> of <em>Time on the Cross</em>, historian Herbert Gutman noted that,</p>[...]</description>
+	</item>
+</channel>
+</rss>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="W. Caleb McDaniel" />
+
+
+<title>Mining the BPL Anti-Slavery Collection on the Internet Archive</title>
+
+<script src="mining-bpl-antislavery_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="mining-bpl-antislavery_files/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="mining-bpl-antislavery_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="mining-bpl-antislavery_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="mining-bpl-antislavery_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="mining-bpl-antislavery_files/highlight/textmate.css"
+      type="text/css" />
+<script src="mining-bpl-antislavery_files/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="mining-bpl-antislavery_files/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<!--Begin contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+<div class="header">
+        <ul class= "nav nav-pills pull-right">
+            <li class="hidden-phone"><a href="./cv.html">CV</a></li>
+            <li class="hidden-phone"><a href="./research.html">Research/</a></li>
+            <li class="hidden-phone"><a href="./teaching.html">Teaching/</a></li>
+            <li class="hidden-phone"><a href="./hacks.html">Hacks/</a></li>
+			<li class="visible-phone"><a href="./index.html#site-map">&larr; Site Map</a></li>
+			<li><a href="index.html"><img src="./photo.jpg" class="pull-left"></a></li>
+        </ul>
+</div>
+
+<!--End contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Mining the BPL Anti-Slavery Collection on the Internet Archive</h1>
+<h4 class="author"><em>W. Caleb McDaniel</em></h4>
+<h4 class="date"><em>October 1, 2013</em></h4>
+
+</div>
+
+
+<div class="well">
+Please note that I have published a more up-to-date version of this tutorial as a <a href="http://programminghistorian.org/lessons/data-mining-the-internet-archive">Programming Historian lesson</a>. Some of the methods used below have either been deprecated by the Internet Archive API or made easier by the Python modules discussed in my PH lesson. But the bottom of this post does contain a still relevant example of how to use BPL metadata to make a social network graph.
+</div>
+<p>No archival collection was more important to my book on American abolitionism than the <a href="http://www.bpl.org/distinction/featured-collections/anti-slavery/">Anti-Slavery Collection</a> at the Boston Public Library in Copley Square. Today, it contains not only the letters of William Lloyd Garrison, one of the icons of the abolitionist movement, but also large collections of letters by and to reformers somehow connected to him. And by “large collection,” I mean <em>large</em>. According to the library’s estimates, there are over 16,000 items at Copley, many of which I pored over in three separate trips to Boston while writing my dissertation and book.</p>
+<p>Fortunately for historians of abolitionism, this historic collection is now being gradually digitized and uploaded to the <a href="http://archive.org/details/bplscas/">Internet Archive</a>. This is good news, not only because the Archive is committed to making its considerable cultural resources free for download, but also because each uploaded item is paired with a wealth of metadata suitable for machine-reading.</p>
+<p>Take <a href="http://archive.org/details/lettertowilliaml00doug">this letter</a> sent by Frederick Douglass to William Lloyd Garrison. Anyone can read the <a href="http://archive.org/stream/lettertowilliaml00doug/39999066767938#page/n0/mode/2up">original manuscript</a> online, without making the trip to Boston, and that alone may be enough to revolutionize and democratize future abolitionist historiography. But you can also download <a href="https://ia801703.us.archive.org/29/items/lettertowilliaml00doug/">multiple files</a> related to the letter that are rich in metadata, like a <a href="https://ia801703.us.archive.org/29/items/lettertowilliaml00doug/lettertowilliaml00doug_dc.xml">Dublin Core</a> record and a fuller <a href="https://ia801703.us.archive.org/29/items/lettertowilliaml00doug/lettertowilliaml00doug_marc.xml">MARCXML</a> record that uses the <a href="http://www.loc.gov/marc/bibliographic/">Library of Congress’s MARC 21 Format for Bibliographic Data</a>.</p>
+<p>Stop and think about that for a moment: <em>every</em> item uploaded from the Collection contains these things. Right now, that means historians have access to rich metadata, full images, and partial descriptions for <a href="http://archive.org/search.php?query=collection%3Abplscas&amp;sort=-publicdate">over 6,400 antislavery letters, manuscripts, and publications</a>.</p>
+<p>In short, to quote <a href="http://activehistory.ca/2013/09/the-internet-archive-rocks-or-two-million-plus-free-sources-to-explore/">Ian Milligan</a>, “The Internet Archive rocks.”</p>
+<p>To figure out just how much the Internet Archive rocks (spoiler: <em>a lot</em>), I decided to test my still embryonic Python chops, learned mostly from the <a href="http://programminghistorian.org">Programming Historian</a>, to see if I could explore the digital anti-slavery collection programmatically.</p>
+<div id="getting-a-list-of-item-urls" class="section level3">
+<h3>Getting a List of Item URLs</h3>
+<p>The first thing I wanted to do was get a list of URLs to all the collection items that have been uploaded to the Internet Archive so far.</p>
+<p>To do that, I examined the URL for <a href="http://archive.org/search.php?query=collection%3Abplscas&amp;page=1">one of the results pages</a> for a search in the <code>bplscas</code> collection:</p>
+<pre><code>http://archive.org/search.php?query=collection%3Abplscas&amp;page=1</code></pre>
+<p>From this page I clicked on the link to the “last” results page, and noticed that the URL for this page was the same, except for the final digit, which at this writing was 130:</p>
+<pre><code>http://archive.org/search.php?query=collection%3Abplscas&amp;page=130</code></pre>
+<p>I then turned to a Programming Historian lesson on how to <a href="http://programminghistorian.org/lessons/downloading-multiple-records-using-query-strings">download multiple pages from a website using query strings</a>. By slightly modifying the code in that lesson, I knew I could get the HTML for every one of the 130 results pages.</p>
+<p>But that would have given me more HTML than I actually wanted. All I wanted were the URLs to each individual item, not all the other bells and whistles on the results page.</p>
+<p>Thankfully, by inspecting the HTML for one of the results pages in my browser, I learned that the URL I want always seems to be contained in an <code>&lt;a class=&quot;titleLink&quot;&gt;</code> tag. So I also turned next to a Programming Historian lesson on <a href="http://programminghistorian.org/lessons/intro-to-beautiful-soup">Beautiful Soup</a>, which helped me figure out how I could parse the HTML for each results page and just get the contents of that one tag for each page. Putting it all together, I came up with this:</p>
+<pre class="python"><code>import urllib2
+from bs4 import BeautifulSoup
+
+# Get the HTML for each list of results from the BPL collection. URLs look
+# like this: http://archive.org/search.php?query=collection%3Abplscas&amp;page=1
+# I know there are 130 pages.
+
+for resultsPage in range(1, 131):
+
+    url = &quot;http://archive.org/search.php?query=collection%3Abplscas&amp;page=&quot; + str(resultsPage)
+    response = urllib2.urlopen(url).read()
+    soup = BeautifulSoup(response)
+    links = soup.find_all(class_=&quot;titleLink&quot;)
+    for link in links:
+        itemURL = link[&#39;href&#39;]
+        f = open(&#39;bplitemurls.txt&#39;,&#39;a&#39;)
+        f.write(&#39;http://archive.org&#39; + itemURL + &#39;\n&#39;)
+        f.close()</code></pre>
+<p>After running that and waiting for a few minutes, I got a text file containing URLs to all of the items currently in the <code>bplscas</code> collection. At this writing, that’s 6453 items. You can get <a href="https://github.com/wcaleb/mining-bpl/blob/master/bplitemurls.txt">the list of URLs</a> I produced, as well as the above script, in <a href="https://github.com/wcaleb/mining-bpl">a GitHub repository</a>, but here’s a taste of what the list looks like:</p>
+<pre><code>http://archive.org/details/lettertodearmrma00chap2
+http://archive.org/details/lettertomariawes00webb2
+http://archive.org/details/lettertodearmiss00smit10
+http://archive.org/details/lettertomydearde00west33
+http://archive.org/details/lettertodearanne00chap7</code></pre>
+<p>It may not look like much, but that list makes it possible to write further scripts that iterate through the entire collection to download associated files and metadata about each item.</p>
+<div class="well">
+<p><strong>Update, October 10:</strong> Thanks to a tweet from <a href="https://twitter.com/williamjturkel/status/385463996368687104">Bill Turkel</a>, I subsequently learned of <a href="https://pypi.python.org/pypi/internetarchive/0.4.3">this <code>internetarchive</code> Python package</a>, which would have made many parts of this exercise much easier. For example, the package comes with a command-line program that can search the Internet Archive directly. To get my list of all of the item names in the <code>bplscas</code> collection, I could simply have typed <code>ia search 'collection:bplscas'</code> at the command line and piped it to a file. Live and learn!</p>
+</div>
+</div>
+<div id="getting-urls-to-the-marc-records-for-items" class="section level3">
+<h3>Getting URLs to the MARC Records for Items</h3>
+<p>The next thing I wanted to do was be able to access the full MARCXML record for each of the items in the collection. That’s where I can get the really valuable information—author, recipient, original call number and so on.</p>
+<p>Unfortunately, however, the base URLs for the MARCXML records vary according to item; most look something like this:</p>
+<pre><code>http://ia801703.us.archive.org/fetchmarc.php?path=%2F29%2Fitems%2Flettertowilliaml00doug%2Flettertowilliaml00doug_marc.xml</code></pre>
+<p>Close inspection shows that the end of that URL is just the item page URL, with <code>_marc.xml</code> appended to the end. But the base URL characters (in this case <code>ia801703</code>) are different for every item. So to construct the URL to the MARC record, I had to use BeautifulSoup again, this time on the HTML for each item page.</p>
+<pre class="python"><code>f = open(&#39;bplitemurls.txt&#39;,&#39;r&#39;)
+for line in f:
+
+    # remove new lines, save item name for later when forming url to MARC
+    line = line.rstrip()    
+    itemname = line.rsplit(&quot;/&quot;, 1)[1]
+
+    # go to item page to get root for HTTPS url, needed for url to MARC
+    itempage = urllib2.urlopen(line).read()
+    htmlsoup = BeautifulSoup(itempage)
+    https_string = htmlsoup.find(text=&quot;HTTPS&quot;)  
+    xmlurl = https_string.find_parent(&quot;a&quot;)[&#39;href&#39;] + &quot;/&quot; + itemname + &quot;_marc.xml&quot;</code></pre>
+<p>Armed with the <code>xmlurl</code> for each item, it’s now possible to use Python to download the XML records to local files, or to use Beautiful Soup again to grab specific data from the XML and write it to a file.</p>
+</div>
+<div id="getting-metadata-from-the-marc-records-for-items" class="section level3">
+<h3>Getting Metadata from the MARC Records for Items</h3>
+<p>One limitation of the digitized version of the Anti-Slavery Collection is that it does not contain full-text transcriptions of each letter (which would/will be a monumental undertaking). But the metadata for each item alone can be pretty useful for macrolevel analysis of the collection.</p>
+<p>For example, by starting (but not finishing) a <a href="https://www.coursera.org/course/sna">Coursera class on social network analysis</a> last year, I learned a little bit about how to use the visualization program <a href="http://gephi.org">Gephi</a> to graph interpersonal networks. Through that course I learned that even a <a href="https://gephi.org/users/supported-graph-formats/csv-format/">fairly simple, CSV text file</a> showing relationships between people can be fed into Gephi for a quick graph.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Using BeautifulSoup and the standard MARC datafields for <a href="http://www.loc.gov/marc/bibliographic/bd100.html">main personal name</a> and <a href="http://www.loc.gov/marc/bibliographic/bd700.html">added personal name</a>, it only took a little additional coding to figure out how to output the author and likely recipient of each BPL item into a semicolon-separated file.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<pre class="python"><code># Function for dealing with empty datafields in the MARC record.
+# http://stackoverflow.com/questions/3376666/
+def getstring(tag):
+    return &quot;None&quot; if tag is None else tag.subfield.string.encode(&#39;utf-8&#39;)
+
+# Go to MARC record for item to get author and recipient
+marcxml = urllib2.urlopen(xmlurl).read()
+xmlsoup = BeautifulSoup(marcxml, &quot;xml&quot;)
+author = getstring(xmlsoup.find(tag=&quot;100&quot;))
+recipient = getstring(xmlsoup.find(tag=&quot;700&quot;))
+
+# In this case, I&#39;m going to write the author and recipient to a CSV file
+# suitable for uploading into Gephi.
+f = open(&#39;bplnetwork.txt&#39;,&#39;a&#39;)
+f.write(author + &#39;;&#39; + recipient + &#39;\n&#39;)
+f.close</code></pre>
+<p>Those lines got me <a href="https://github.com/wcaleb/mining-bpl/blob/master/bplnetwork.txt">a lengthy table</a> of the author and recipient for each item in my list of item URLs. Here’s a snippet of what this looks like:</p>
+<pre><code>Chapman, Maria Weston,;May, Samuel,
+Webb, Richard Davis,;Chapman, Maria Weston,
+Smith, Evelina A. S.;Weston, Anne Warren,
+Weston, Anne Warren,;Weston, Deborah,</code></pre>
+<p>The list as a whole has some problems, created by the facts that (a) many letters don’t have the recipient listed and (b) not all the items in the collection are letters. To make my first network visualization, I just removed the 600 or so letters that had “None” as a creator or a recipient. But to do further analysis, I would have to do more data cleaning.</p>
+<p>Still, by feeding the table I had into Gephi (with a <code>source;target</code> header row appended before the first row of names), and running a standard layout, I got this pretty neat looking graph:</p>
+<div class="figure">
+<img src="./bplnetwork1.png" />
+
+</div>
+<p>I’ve cropped the image to remove some of the outliers who did not have many letters in the collection, but each dot on this graph represents a name. The central “node” in the lower image is, not surprisingly, William Lloyd Garrison, and at the center of the cluster above him is the <a href="http://www25.uua.org/uuhs/duub/articles/mariawestonchapman.html">quartet of abolitionist sisters</a>, Maria Weston Chapman, Caroline Weston, Deborah Weston, and Anne Warren Weston.</p>
+<p>The next step in this exploration would be to figure out what this visualization means, but that’s a subject for another post. To me, the graph alone is an indication of the exciting opportunities created by mining the BPL on the Internet Archive. And the fact that I was able to do this mining largely on the basis of <a href="http://programminghistorian.org">Programming Historian</a> lessons is evidence that even historians more accustomed to sitting in archives and flipping through folders can also learn to interact with primary sources on the web in ways that go beyond Googling and browsing.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>A post by Justin Briggs on <a href="http://justinbriggs.org/how-visualize-open-site-explorer-data-in-gephi">How to Visualize Open Site Explorer Data in Gephi</a> also offers a useful introduction to Gephi’s features.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Note that to use BeautifulSoup to parse the XML records, I had to have <code>lxml</code> installed. I’m also inferring from the records I’ve examined that the original catalogers put the author of the letter in the <code>100</code> datafield and the receipient in the first subfield of the <code>700</code> tag in the MARCXML record. I’m fairly confident this is the convention used, and spot-checking confirms that, but caveat emptor.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>If you’d like to explore the scripts and the data further, I’ve created a <a href="https://github.com/wcaleb/mining-bpl">GitHub repository</a> with the code and output discussed in this post.<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>
+
+<!--Begin contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+<!--Footer-->
+
+<footer>
+
+		<ul class="nav nav-pills pull-right hidden-phone">
+            <li class="transparent"><script type="text/javascript">
+			<!--
+			h='&#114;&#x69;&#x63;&#x65;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#x63;&#x61;&#108;&#x65;&#98;#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;';e=n+a+h;
+			document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'<img src='+'"./img/glyph_em'+'ail.png"'+'>'+'<\/'+'a'+'>');
+			// -->
+			</script><noscript>&#x63;&#x61;&#108;&#x65;&#98;&#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#x65;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;</noscript>
+			</li>
+			<li class="transparent"><a href="http://www.twitter.com/wcaleb" title="My Twitter feed" class="transparent"><img src="./img/glyph_twitter.png"></a></li>
+			<li class="transparent"><a href="http://pinboard.in/u:wcaleb" title="My Pinboard"><img src="./img/glyph_pinboard.png"></a></li>
+			<li class="transparent"><a href="http://clippings.tumblr.com" title="My Tumblr blog, Clippings"><img src="./img/glyph_tumblr.png"></a></li>
+			<li class="transparent"><a href="http://github.com/wcaleb" title="My Github repos"><img src="./img/glyph_github.png"></a></li>
+		</ul>
+
+<ul class="nobullet">
+<li><a href="colophon.html">Colophon/</a></li>
+<li><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License/</a></li>
+<li><a href="./feed.xml">RSS/</a></li>
+<li class="visible-phone"><a href="./index.html#contact">Contact/</a></li>
+</ul>
+
+</footer>
+
+<!--Statcounter-->
+
+<script type="text/javascript">
+var sc_project=2874620; 
+var sc_invisible=0; 
+var sc_partition=29; 
+var sc_security="cc89e61f"; 
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script>
+
+<noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c30.statcounter.com/2874620/0/cc89e61f/0/" alt="invisible hit counter" /></a></div></noscript>
+
+<!--End contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

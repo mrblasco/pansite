@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="W. Caleb McDaniel" />
+
+
+<title>Two Simple Timers</title>
+
+<script src="two-simple-timers_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="two-simple-timers_files/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="two-simple-timers_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="two-simple-timers_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="two-simple-timers_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="two-simple-timers_files/highlight/textmate.css"
+      type="text/css" />
+<script src="two-simple-timers_files/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="two-simple-timers_files/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<!--Begin contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+<div class="header">
+        <ul class= "nav nav-pills pull-right">
+            <li class="hidden-phone"><a href="./cv.html">CV</a></li>
+            <li class="hidden-phone"><a href="./research.html">Research/</a></li>
+            <li class="hidden-phone"><a href="./teaching.html">Teaching/</a></li>
+            <li class="hidden-phone"><a href="./hacks.html">Hacks/</a></li>
+			<li class="visible-phone"><a href="./index.html#site-map">&larr; Site Map</a></li>
+			<li><a href="index.html"><img src="./photo.jpg" class="pull-left"></a></li>
+        </ul>
+</div>
+
+<!--End contents of _navigation.html which are inserted using the include-before-body option in pandoc.-->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Two Simple Timers</h1>
+<h4 class="author"><em>W. Caleb McDaniel</em></h4>
+<h4 class="date"><em>May 1, 2012</em></h4>
+
+</div>
+
+
+<p>Like <a href="http://chronicle.com/blogs/profhacker/an-everyday-essential-the-timer/22675">Natalie Houston</a> and the Profhacker gang, I sometimes use a timer to keep me on task when I need to be productive, especially when the tasks at hand are ones that I’d rather put off. But instead of investing in a full-blown timer program, I’ve hacked together two simple timers for my Mac that I can fire up whenever I need them. Both are rough around the edges, but they work for me.</p>
+<div id="a-simple-terminal-timer" class="section level2">
+<h2>A Simple Terminal Timer</h2>
+<p>I can’t remember where on the Web I first read about this, but the simplest way I’ve found to set a timer is to open the Terminal, and enter the command:</p>
+<pre><code>sleep 600;say &quot;break&quot;</code></pre>
+<p>This will cause the computer to count to 600 seconds, and then say “break” using the <a href="http://www.macworld.com/article/1164787/how_to_change_the_mac_s_system_voice.html">system’s voice</a>. Then I set another timer for the break that will prompt me to get back to work.</p>
+<pre><code>sleep 120;say &quot;back to work&quot;</code></pre>
+<p>I can easily recall these timers at the command line by using the up arrow key to go back to previous commands. So I can easily run each of these timers back-to-back for as long as I want.</p>
+<p>Usually, I find myself using the simple terminal timer when I want to work in short bursts using a system like Merlin Mann’s <a href="http://www.43folders.com/2005/10/11/procrastination-hack-1025">(10+2)*5</a> procastination hack. But when I want to work in longer stretches, I use iTunes and Applescript.</p>
+</div>
+<div id="a-simple-itunes-timer" class="section level2">
+<h2>A Simple iTunes Timer</h2>
+<p>I like to listen to jazz while I work, so about a year ago I pieced together an Applescript program that causes my music to fade out when it’s time for a break, and then fade back in when the break is over. To make it work, you can copy and paste the following code into AppleScript Editor, save the script as an Application, and then launch the application just like any other Mac program. (I call mine “Write Tunes,” because I use it often to time my writing sessions.)</p>
+<pre><code>property tick : 2
+property thismany : 1
+
+display dialog &quot;Playlist?&quot; default answer &quot;Straight Ahead Jazz&quot;
+set writelist to text returned of result
+
+display dialog &quot;How many work sessions do you want?&quot; default answer &quot;2&quot;
+set sessions to text returned of result as number
+
+display dialog &quot;How many minutes each?&quot; default answer &quot;25&quot;
+set worktime to ((text returned of result as number) * 60)
+
+display dialog &quot;How many minutes for a break?&quot; default answer &quot;5&quot;
+set breaktime to ((text returned of result as number) * 60)
+
+tell application &quot;iTunes&quot;
+    set sound volume to 50
+    tell playlist writelist
+        set shuffle to false
+        set shuffle to true
+    end tell
+    repeat sessions times
+        set snd to sound volume
+        set sound volume to 0
+        if player state is paused then
+            play
+        else
+            play playlist writelist
+        end if
+        repeat
+            if (get sound volume) is greater than or equal to (snd - tick) then
+                set sound volume to snd
+                exit repeat
+            end if
+            set sound volume to (sound volume + tick)
+            delay thismany
+        end repeat
+        set resume_volume to sound volume
+        delay worktime
+        repeat
+            set snd to sound volume
+            if snd is less than or equal to tick then
+                set sound volume to 0
+                exit repeat
+            end if
+            set sound volume to (snd - tick)
+            delay thismany
+        end repeat
+        pause
+        set sound volume to resume_volume
+        delay breaktime
+    end repeat
+end tell
+
+quit
+
+on quit
+    continue quit
+end quit</code></pre>
+<p>What I like about this timer is the way that it slowly “fades in” and “fades out” of work time, alerting me when a break is coming so I can wrap up a sentence and then alerting me when the break is ending, so I can stop surfing or snacking and get back into a writing frame of mind.</p>
+<p>The settings can be adjusted by changing the default playlist name (currently “Straight Ahead Jazz”) and break and work times, but these defaults can also be left as they are; the dialog box will allow users to overwrite the default with their own choices. The speed with which the volume fades in and out can also be adjusted by changing the “tick” and “thismany” properties in the first two lines.</p>
+<p>I patched this together largely with help from <a href="http://dougscripts.com/itunes/">Doug’s Applescripts for iTunes</a>, so there are definitely seams showing. For example, I’ve never really figured out a way to quit the app once it’s running other than to “Force Quit” it. The program will also fail if any iTunes dialogs pop up (for example, if I have my home wireless speakers selected in iTunes and then try to run this program at work, where those speakers are unavailable, then the program will fail). I should probably try to fix these issues someday, but right now the program does the trick, which is to get me working on what I should be working on.</p>
+</div>
+
+<!--Begin contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+<!--Footer-->
+
+<footer>
+
+		<ul class="nav nav-pills pull-right hidden-phone">
+            <li class="transparent"><script type="text/javascript">
+			<!--
+			h='&#114;&#x69;&#x63;&#x65;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#x63;&#x61;&#108;&#x65;&#98;#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;';e=n+a+h;
+			document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'<img src='+'"./img/glyph_em'+'ail.png"'+'>'+'<\/'+'a'+'>');
+			// -->
+			</script><noscript>&#x63;&#x61;&#108;&#x65;&#98;&#46;&#x6d;&#x63;&#100;&#x61;&#110;&#x69;&#x65;&#108;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#x65;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;</noscript>
+			</li>
+			<li class="transparent"><a href="http://www.twitter.com/wcaleb" title="My Twitter feed" class="transparent"><img src="./img/glyph_twitter.png"></a></li>
+			<li class="transparent"><a href="http://pinboard.in/u:wcaleb" title="My Pinboard"><img src="./img/glyph_pinboard.png"></a></li>
+			<li class="transparent"><a href="http://clippings.tumblr.com" title="My Tumblr blog, Clippings"><img src="./img/glyph_tumblr.png"></a></li>
+			<li class="transparent"><a href="http://github.com/wcaleb" title="My Github repos"><img src="./img/glyph_github.png"></a></li>
+		</ul>
+
+<ul class="nobullet">
+<li><a href="colophon.html">Colophon/</a></li>
+<li><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License/</a></li>
+<li><a href="./feed.xml">RSS/</a></li>
+<li class="visible-phone"><a href="./index.html#contact">Contact/</a></li>
+</ul>
+
+</footer>
+
+<!--Statcounter-->
+
+<script type="text/javascript">
+var sc_project=2874620; 
+var sc_invisible=0; 
+var sc_partition=29; 
+var sc_security="cc89e61f"; 
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script>
+
+<noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c30.statcounter.com/2874620/0/cc89e61f/0/" alt="invisible hit counter" /></a></div></noscript>
+
+<!--End contents of _footer.html which are inserted using the include-after-body option in pandoc.-->
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
