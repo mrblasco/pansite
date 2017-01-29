@@ -1,5 +1,4 @@
 #!/bin/sh
-
 LOCDIR=`pwd` # Run script from this directory
 PUBDIR=$LOCDIR/_site
 FOOTER=$LOCDIR/_footer.html
@@ -10,6 +9,7 @@ if [ ! -e $PUBDIR ]; then
 fi
 
 cp $FOOTER $NAVBAR $CONFIG $PUBDIR
+cp *.png $PUBDIR
 
 # $PANOPTS above assume that the website template is in
 # $HOME/.pandoc/templates/ and that the CSS file is in $PUBDIR.
@@ -78,15 +78,15 @@ sort -nr $LOCDIR/.allposts | sed -n '1,5 p'|\
 
 if [ $LOCDIR/cv.pdc -nt $PUBDIR/cv.html ] || [ $LOCDIR/cvhead.pdc -nt $PUBDIR/cv.html ]; then
 echo "Processing CV ..."
-pandoc $PANOPTS\
- --variable=date:"$(date '+%B %e, %Y')"\
- -A "$FOOTER"\
- -o $PUBDIR/cv.html\
- $LOCDIR/cvhead.pdc $LOCDIR/cv.pdc
-sed -E 's/^[^#\[\\]/\\\ind &/g' $LOCDIR/cv.pdc |\
- pandoc -s -S -f markdown --latex-engine=xelatex\
- --template=cv.tex\
- -o $PUBDIR/mcdanielcv.pdf
+  cat $LOCDIR/cvhead.pdc $LOCDIR/cv.pdc > $PUBDIR/cv.pdc
+  crmd $PUBDIR/cv.pdc &> /dev/null && rm $PUBDIR/cv.pdc
+# pandoc $PANOPTS\
+#  --variable=date:"$(date '+%B %e, %Y')"\
+#  -A "$FOOTER"\
+#  -o $PUBDIR/cv.html\
+#  $LOCDIR/cvhead.pdc $LOCDIR/cv.pdc
+# sed -E 's/^[^#\[\\]/\\\ind &/g' $LOCDIR/cv.pdc |\
+ pandoc $LOCDIR/cv.pdc -o $PUBDIR/cv.pdf
 fi
 
 echo "Processing colophon ..."

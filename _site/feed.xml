@@ -7,6 +7,13 @@
 	<atom:link href="http://wcm1.web.rice.edu/feed.xml"
 	 rel="self" type="application/rss+xml" />
 	<item>
+		<title>Here store news</title>
+		<link>http://wcm1.web.rice.edu/test-article.html</link>
+		<guid>http://wcm1.web.rice.edu/test-article.html</guid>
+		<pubDate>Sat, 28 Jan 2017 00:00:00 EST</pubDate>
+		<description><p>this is a new category</p>[...]</description>
+	</item>
+	<item>
 		<title>This is just a test</title>
 		<link>http://wcm1.web.rice.edu/testing_post.html</link>
 		<guid>http://wcm1.web.rice.edu/testing_post.html</guid>
@@ -33,13 +40,6 @@
 		<guid>http://wcm1.web.rice.edu/history-major-in-digital-age.html</guid>
 		<pubDate>Sun, 04 Jan 2015 00:00:00 EST</pubDate>
 		<description><p>I delivered a version of these comments as part of a <a href="https://aha.confex.com/aha/2015/webprogram/Session12225.html">roundtable at the AHA 2015 meeting</a> in New York City, which posed the question, “Whither the History Major?” My comments focused on what the history major looks like in a “digital age.” In the delivered talk, I focus more on how “capstone” projects might change to reflect digital changes in the landscape of history.</p>[...]</description>
-	</item>
-	<item>
-		<title>Slave Sales on Twitter</title>
-		<link>http://wcm1.web.rice.edu/slave-sales-on-twitter.html</link>
-		<guid>http://wcm1.web.rice.edu/slave-sales-on-twitter.html</guid>
-		<pubDate>Sat, 15 Nov 2014 00:00:00 EST</pubDate>
-		<description><p>In <a href="http://books.google.com/books?id=TUtFgWOISxMC&amp;lpg=PA124&amp;ots=JkLLPw4h9o&amp;pg=PA124#v=onepage&amp;q&amp;f=false">his 1975 critique</a> of <em>Time on the Cross</em>, historian Herbert Gutman noted that,</p>[...]</description>
 	</item>
 </channel>
 </rss>

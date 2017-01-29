@@ -1,15 +1,6 @@
-Caleb McDaniel's Website 
+ Website  in Rmarkdown
 ========================
 
-This repository contains the plain text files I use to generate [my
-website](http://wcm1.web.rice.edu). As explained on my
-[Colophon](http://wcm1.web.rice.edu/colophon.html), I use a simple bash
-shell script to run these files through pandoc and generate the files I
-upload to my server.
+This repository contains a Rmarkdown  implementation of the bash shell script `pansite.sh`. The script uses plain text files to generate a blog website.
 
-The shell script is in this repository as `pansite.sh`.
-
-The pandoc template used by the script (`website.html`) is located in my
-[pandoc-template](https://github.com/wcaleb/pandoc-templates)
-repository.
 

@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="W. Caleb McDaniel" />
+  <meta name="author" content="" />
   <title>Colophon</title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
@@ -48,27 +48,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <body>
 <div id="header">
 <h1 class="title">Colophon</h1>
-<h2 class="author">W. Caleb McDaniel</h2>
+<h2 class="author"></h2>
 </div>
-<h2 id="tools-i-use">Tools I Use</h2>
-<ul>
-<li>MacBook Pro running Lion</li>
-<li><a href="http://www.iterm2.com/#/section/home">iTerm2</a></li>
-<li><a href="http://www.vim.org">Vim</a> for text editing</li>
-<li><a href="http://www.johnmacfarlane.net/pandoc/">Pandoc</a> for document conversion</li>
-<li><a href="http://notational.net">Notational Velocity</a> for light-duty notetaking and task management</li>
-<li><a href="http://notesy-app.com">Notesy</a> and <a href="http://agiletortoise.com/drafts">Drafts</a> for iOS notetaking</li>
-<li><a href="http://www.mutt.org">Mutt</a> for my email</li>
-</ul>
-<h2 id="how-this-site-is-built">How This Site is Built</h2>
-<p>The posts and pages on this site begin as plain-text files written in Pandoc's extended version of <a href="http://daringfireball.net/projects/markdown">Markdown</a>. I then use the bash shell script below to turn those files into flat HTML documents that are uploaded to my server.</p>
-<p>The shell script is a much more basic version of full-featured static site generators like <a href="http://jaspervdj.be/hakyll/">Hakyll</a>, <a href="http://jekyllrb.com">Jekyll</a>, and <a href="http://ringce.com/hyde">Hyde</a>, and even more like <a href="http://rawk.brokenlcd.net">rawk</a>. I looked at some of these programs but wanted to see if I could build something lighter for myself that used Unix tools I was already familiar with. Pandoc is robust enough, for my purposes, to do most of the heavy lifting with a simple pandoc HTML template, which I've posted for reference <a href="http://github.com/wcaleb/pandoc-templates/blob/master/website.html">here</a>. For now, at least, this script also manages to conform to <a href="http://jaspervdj.be/hakyll/philosophy.html">the Hakyll philosophy</a>; not only does configuration take less than 100 lines of code, but the whole shell script is under 100 lines. I took some inspiration for it from <a href="http://sohcahtoa.org.uk/pages/publish-a-web-site-with-bash-scripts.html">this page</a> and a few others.</p>
-<p>The key part of the script is the long <code>echo</code> command that comes after using pandoc to convert each post to html. This line creates a record for each post containing information fields (separated by %) that are then manipulated later in the script by <code>awk</code> to generate an RSS feed and lists of posts for the main page and each category page.</p>
-<p>To style the site, I use a customized, minimal version of <a href="http://twitter.github.com/bootstrap/index.html">Bootstrap</a> for the responsive layout, and <a href="http://glyphicons.com">Glyphicons</a> for the social media icons. Some colors were inspired by <a href="http://klepas.org">Simon Pascal Klein</a> and <a href="http://ethanschoonover.com/solarized">Ethan Schoonover</a>, though neither should be blamed for my amateurish design choices!</p>
-<p>I've set up the script to update the code below everytime I upload changes to this site. I have also included comments in the html source for individual pages so that interested geeks can see which parts of the site are added using pandoc's options and which are part of the Markdown files that form the main content. I'm still a shell scripting newbie, so if you see problems with the code or have suggestions about improving it, I'd be grateful if you'd let me know at <a href="mailto:caleb.mcdaniel@rice.edu">caleb.mcdaniel@rice.edu</a>. The script and all of the files that make up the website can also be found in a <a href="https://github.com/wcaleb/website">github repository</a>, though it may not always be as current as this site.</p>
-<p>Code used to generate site on Sat Jan 28 14:33:50 EST 2017</p>
+<p>Code used to generate site on Sat Jan 28 20:33:07 EST 2017</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/sh</span>
-
 <span class="va">LOCDIR=</span><span class="kw">`</span><span class="bu">pwd</span><span class="kw">`</span> <span class="co"># Run script from this directory</span>
 <span class="va">PUBDIR=$LOCDIR</span>/_site
 <span class="va">FOOTER=$LOCDIR</span>/_footer.html
@@ -79,6 +62,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">fi</span>
 
 <span class="fu">cp</span> <span class="va">$FOOTER</span> <span class="va">$NAVBAR</span> <span class="va">$CONFIG</span> <span class="va">$PUBDIR</span>
+<span class="fu">cp</span> *.png <span class="va">$PUBDIR</span>
 
 <span class="co"># $PANOPTS above assume that the website template is in</span>
 <span class="co"># $HOME/.pandoc/templates/ and that the CSS file is in $PUBDIR.</span>
@@ -147,16 +131,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="co">if [ $LOCDIR/cv.pdc -nt $PUBDIR/cv.html ] || [ $LOCDIR/cvhead.pdc -nt $PUBDIR/cv.html ]; then</span>
 <span class="bu">echo</span> <span class="st">&quot;Processing CV ...&quot;</span>
-<span class="ex">pandoc</span> <span class="va">$PANOPTS</span>\
- --variable=date:<span class="st">&quot;</span><span class="va">$(</span><span class="fu">date</span> <span class="st">&#39;+%B %e, %Y&#39;</span><span class="va">)</span><span class="st">&quot;</span>\
- -A <span class="st">&quot;</span><span class="va">$FOOTER</span><span class="st">&quot;</span>\
- -o <span class="va">$PUBDIR</span>/cv.html\
- <span class="va">$LOCDIR</span>/cvhead.pdc <span class="va">$LOCDIR</span>/cv.pdc
-<span class="fu">sed</span> -E <span class="st">&#39;s/^[^#\[\\]/\\\ind &amp;/g&#39;</span> <span class="va">$LOCDIR</span>/cv.pdc <span class="kw">|\</span>
- <span class="ex">pandoc</span> -s -S -f markdown --latex-engine=xelatex\
- --template=cv.tex\
- -o <span class="va">$PUBDIR</span>/mcdanielcv.pdf
-<span class="kw">fi</span>
+  <span class="fu">cat</span> <span class="va">$LOCDIR</span>/cvhead.pdc <span class="va">$LOCDIR</span>/cv.pdc <span class="op">&gt;</span> <span class="va">$PUBDIR</span>/cv.pdc
+  <span class="ex">crmd</span> <span class="va">$PUBDIR</span>/cv.pdc <span class="op">&amp;&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="va">$PUBDIR</span>/cv.pdc
+<span class="co"># pandoc $PANOPTS\</span>
+<span class="co">#  --variable=date:&quot;$(date &#39;+%B %e, %Y&#39;)&quot;\</span>
+<span class="co">#  -A &quot;$FOOTER&quot;\</span>
+<span class="co">#  -o $PUBDIR/cv.html\</span>
+<span class="co">#  $LOCDIR/cvhead.pdc $LOCDIR/cv.pdc</span>
+<span class="co"># sed -E &#39;s/^[^#\[\\]/\\\ind &amp;/g&#39; $LOCDIR/cv.pdc |\</span>
+ <span class="ex">pandoc</span> <span class="va">$LOCDIR</span>/cv.pdc -o <span class="va">$PUBDIR</span>/cv.pdf
+fi
 
 <span class="bu">echo</span> <span class="st">&quot;Processing colophon ...&quot;</span>
 <span class="fu">cat</span> <span class="va">$LOCDIR</span>/<span class="va">$0</span> <span class="kw">|\</span>
